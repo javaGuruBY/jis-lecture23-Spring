@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="max" class="by.jrr.springexample.scanbeans.bean.Human" scope="singleton" autowire="byName">
+        <property name="name" value="max"/>
+        <property name="weight" value="45" />
+    </bean>
+
+    <bean id="head" class="by.jrr.springexample.scanbeans.bean.Head" scope="singleton">
+        <property name="eyes" value="2"/>
+    </bean>
+
+    <bean id="alianHead" class="by.jrr.springexample.scanbeans.bean.Head" scope="singleton">
+        <property name="eyes" value="5"/>
+    </bean>
+
+</beans>

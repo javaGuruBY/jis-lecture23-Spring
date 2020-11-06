@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="bpp" class="by.jrr.springexample.xml.integrator.config.MyBeanPostProcessor"/>
+    <bean id="destroy" class="by.jrr.springexample.xml.integrator.config.OnDestroy" />
+    <bean id="initBean" class="by.jrr.springexample.xml.integrator.config.InitBean" />
+
+    <bean id="formatter" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd"/>
+    </bean>
+
+    <bean id="parentContractor" class="by.jrr.springexample.xml.integrator.bean.Contractor">
+        <property name="name" value="X Æ A-12"/>
+        <property name="level">
+            <util:constant static-field="java.lang.Integer.MIN_VALUE"/>
+        </property>
+
+    </bean>
+
+    <bean id="dev"
+          class="by.jrr.springexample.xml.integrator.bean.Developer"
+          parent="parentContractor"
+          lazy-init="true"
+          destroy-method="onDestroy">
+        <constructor-arg index="0" value="Max-dev"/>
+        <constructor-arg index="2" value="2"/>
+        <constructor-arg index="1" value="Java"/>
+        <constructor-arg index="3" value="true"/>
+        <property name="techSteck">
+            <util:map>
+                <entry key="Spring" value="2"/>
+                <entry key="JPA" value="1"/>
+                <entry key="jUnit" value="3"/>
+            </util:map>
+        </property>
+        <property name="date">
+            <bean factory-bean="formatter" factory-method="parse">
+                <constructor-arg value="2020-11-06"/>
+            </bean>
+        </property>
+        <property name="number" value="512M1"/>
+    </bean>
+
+    <bean id="tester"
+          class="by.jrr.springexample.xml.integrator.bean.Developer"
+          parent="parentContractor"
+          lazy-init="true"
+          destroy-method="onDestroy">
+        <!--        <property name="name" value="Bob-test"/>-->
+        <property name="skill" value="Java"/>
+        <property name="level" value="2"/>
+        <property name="intesive" value="false"/>
+        <property name="techSteck">
+            <map>
+                <entry key="JUnit" value="2"/>
+                <entry key="Mockito" value="1"/>
+                <entry key="Harmset" value="3"/>
+            </map>
+        </property>
+        <property name="date">
+            <bean factory-bean="formatter" factory-method="parse">
+                <constructor-arg value="2019-05-12"/>
+            </bean>
+        </property>
+        <property name="number" value="19-512M1"/>
+    </bean>
+
+    <bean id="manager"
+          class="by.jrr.springexample.xml.integrator.bean.Manager"
+          parent="parentContractor"
+          lazy-init="true">
+        <!--        <property name="name" value="Maksim shelkovich" />-->
+        <property name="age" value="27"/>
+        <property name="developers">
+            <set>
+                <ref bean="dev"/>
+                <ref bean="tester"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="trainee" class="by.jrr.springexample.xml.integrator.bean.Developer">
+        <constructor-arg value="Olga"/>
+    </bean>
+
+    <bean id="anon" class="by.jrr.springexample.xml.integrator.bean.Developer">
+        <constructor-arg value="Mega Developer"/>
+    </bean>
+
+    <bean id="fitness yoga" name="projectA, projectC" class="by.jrr.springexample.xml.integrator.bean.BotProject"
+          scope="prototype">
+        <constructor-arg value="fitnessBot"></constructor-arg>
+        <constructor-arg ref="dev"></constructor-arg>
+        <constructor-arg>
+            <bean factory-bean="formatter" factory-method="parse">
+                <constructor-arg value="2021-01-01"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="yoga" name="projectB" class="by.jrr.springexample.xml.integrator.bean.BotProject">
+        <property name="name" value="youga bot"></property>
+        <property name="teamLead" ref="anon"></property>
+        <property name="start">
+            <bean factory-bean="formatter" factory-method="parse">
+                <constructor-arg value="2020-09-30"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="israel"
+          class="by.jrr.springexample.xml.integrator.bean.Department"
+          init-method="initDepartment"
+          lazy-init="true">
+        <constructor-arg value="Israel Department"/>
+        <constructor-arg>
+            <list>
+                <ref bean="tester"></ref>
+                <ref bean="dev"></ref>
+                <ref bean="manager"></ref>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>
