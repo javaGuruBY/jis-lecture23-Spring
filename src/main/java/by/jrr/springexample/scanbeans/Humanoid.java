@@ -18,7 +18,6 @@ public class Humanoid {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(Humanoid.class);
         MyMainService myMainService = ctx.getBean(MyMainService.class);
         myMainService.stuffingg();
-
     }
 
     public static void componentScan() {
